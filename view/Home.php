@@ -20,8 +20,8 @@
         <nav>
             <ul class="flex gap-4 sm:gap-6">
                 <li><a href="index.html" class="hover:text-blue-300 transition">Home</a></li>
-                <li><a href="admin.html" class="hover:text-blue-300 transition">Admin</a></li>
-                <li><a href="" class="hover:text-blue-300 transition">Login</a></li>
+                <li><a href="login.php" class="hover:text-blue-300 transition">Admin</a></li>
+                
             </ul>
         </nav>
     </header>
@@ -29,7 +29,7 @@
     <!-- Hero Section -->
     <section class="max-w-3xl mx-auto pt-10 pb-8 px-4 text-center">
         <h1 class="text-3xl sm:text-4xl font-bold mb-3"><span class="text-blue-500">Welcome to DIP Blog!</span></h1>
-        <p class="text-base sm:text-lg text-gray-600">Discover stories, guides, and travel inspiration from around the world.</p>
+        <p class="text-base sm:text-lg text-gray-600">Discover Stories, Guides, and Travel Inspiration From Around The Bangladesh.<br> Start Exploring Bangladesh Today!</p>
     </section>
 
     <!-- Blog List Section -->
@@ -66,7 +66,7 @@
             <a href="#" aria-label="Twitter" class="hover:text-blue-400"><i class="fa-brands fa-twitter"></i></a>
             <a href="#" aria-label="WhatsApp" class="hover:text-green-500"><i class="fa-brands fa-whatsapp"></i></a>
         </div>
-        <p class="font-medium text-sm sm:text-base">&copy; 2025 LH Blog. All Rights Reserved.</p>
+        <p class="font-medium text-sm sm:text-base">&copy; 2025 DIP Blog. All Rights Reserved.</p>
     </footer>
     <!-- Font Awesome CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" crossorigin="anonymous"></script>
