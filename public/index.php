@@ -1,9 +1,15 @@
 <?php
-require_once __DIR__ . '/../src/Core/Autoloader.php';
+// require_once __DIR__ . '/../src/Core/Autoloader.php'; // এই লাইনটি মুছে দিন
 
-use LH\Controllers\AuthController;
+require_once __DIR__ . '/../Controller/BlogController.php';
 
-AuthController::checkAuth();
+use LH\Controller\BlogController;
 
-// Admin dashboard code here
-echo "Welcome to Admin Dashboard!";
+$page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int) $_GET['page'] : 1;
+$postsPerPage = 5;
+
+$controller = new BlogController();
+$posts = $controller->listPosts($page, $postsPerPage);
+$totalPages = $controller->getTotalPages($postsPerPage);
+
+require __DIR__ . '/../view/admin/dashbord.php';
