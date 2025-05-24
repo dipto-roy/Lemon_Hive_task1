@@ -1,3 +1,11 @@
+<?php
+require_once __DIR__ . '/../../Controller/authc.php';
+
+use LH\Controllers\AuthController;
+
+AuthController::checkAuth();
+?>
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth" >
 <head>
@@ -26,7 +34,8 @@
       <ul class="flex gap-4">
         <li><a href="create_post.php" class="bg-blue-600 hover:bg-blue-700 rounded px-3 py-1 text-sm sm:text-base font-semibold transition">+ Create Post</a></li>
         <li><a href="settings.php" class="hover:underline text-sm sm:text-base">Settings</a></li>
-        <li><a href="logout.php" class="hover:underline text-sm sm:text-base text-red-400">Logout</a></li>
+       <!-- <li><a href="logout.php" class="hover:underline text-sm sm:text-base text-red-400">Logout</a></li>-->
+        <li><a href="../../public/logout.php" class="hover:underline text-sm sm:text-base text-red-400">Logout</a></li>
       </ul>
     </nav>
   </header>

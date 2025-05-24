@@ -20,7 +20,7 @@
         <nav>
             <ul class="flex gap-4 sm:gap-6">
                 <li><a href="index.html" class="hover:text-blue-300 transition">Home</a></li>
-                <li><a href="login.php" class="hover:text-blue-300 transition">Admin</a></li>
+                <li><a href="login_page.php" class="hover:text-blue-300 transition">Admin</a></li>
                 
             </ul>
         </nav>
