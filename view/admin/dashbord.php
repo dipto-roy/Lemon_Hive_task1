@@ -8,18 +8,12 @@ use LH\Controllers\AuthController;
 AuthController::checkAuth();
 
 $controller = new BlogController();
-$posts = $controller->getAllPosts();
+// পেজ নম্বর ও পোস্ট প্রতি পেজ সংখ্যা আপনি চাইলে ডাইনামিক করতে পারেন
+$page = 1;
+$postsPerPage = 100;
+
+$posts = $controller->listPosts($page, $postsPerPage);
 ?>
-
-<?php
-require_once __DIR__ . '/../../Controller/BlogController.php';
-
-
-
-$controller = new BlogController();
-$posts = $controller->listPosts(1, 100);  // পেজ 1, ১০০ পোস্ট (বা আপনার প্রয়োজন অনুযায়ী)
-?>
-
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth" >
@@ -49,7 +43,6 @@ $posts = $controller->listPosts(1, 100);  // পেজ 1, ১০০ পোস্
       <ul class="flex gap-4">
         <li><a href="create_blog.php" class="bg-blue-600 hover:bg-blue-700 rounded px-3 py-1 text-sm sm:text-base font-semibold transition">+ Create Post</a></li>
         <li><a href="settings.php" class="hover:underline text-sm sm:text-base">Settings</a></li>
-       <!-- <li><a href="logout.php" class="hover:underline text-sm sm:text-base text-red-400">Logout</a></li>-->
         <li><a href="../../public/logout.php" class="hover:underline text-sm sm:text-base text-red-400">Logout</a></li>
       </ul>
     </nav>
@@ -70,30 +63,29 @@ $posts = $controller->listPosts(1, 100);  // পেজ 1, ১০০ পোস্
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-  <?php foreach ($posts as $post): ?>
-    <tr class="hover:bg-gray-50">
-      <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($post['id']) ?></td>
-      <td class="px-4 py-3 text-sm text-gray-900 max-w-xs truncate" title="<?= htmlspecialchars($post['title']) ?>">
-        <?= htmlspecialchars($post['title']) ?>
-      </td>
-      <td class="px-4 py-3 text-sm text-gray-600"><?= htmlspecialchars($post['created_at']) ?></td>
-      <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium space-x-3">
-        <a href="edit_post.php?id=<?= $post['id'] ?>" class="text-blue-600 hover:text-blue-800">Edit</a>
-        <button
-          data-id="<?= $post['id'] ?>"
-          class="text-red-600 hover:text-red-800 delete-post-btn"
-          aria-label="Delete post <?= htmlspecialchars($post['title']) ?>"
-        >Delete</button>
-      </td>
-    </tr>
-  <?php endforeach; ?>
-</tbody>
-
+          <?php foreach ($posts as $post): ?>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-900"><?= htmlspecialchars($post['id']) ?></td>
+              <td class="px-4 py-3 text-sm text-gray-900 max-w-xs truncate" title="<?= htmlspecialchars($post['title']) ?>">
+                <?= htmlspecialchars($post['title']) ?>
+              </td>
+              <td class="px-4 py-3 text-sm text-gray-600"><?= htmlspecialchars($post['created_at']) ?></td>
+              <td class="px-4 py-3 whitespace-nowrap text-center text-sm font-medium space-x-3">
+                <a href="edit_post.php?id=<?= $post['id'] ?>" class="text-blue-600 hover:text-blue-800">Edit</a>
+                <button
+                  data-id="<?= $post['id'] ?>"
+                  class="text-red-600 hover:text-red-800 delete-post-btn"
+                  aria-label="Delete post <?= htmlspecialchars($post['title']) ?>"
+                >Delete</button>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
       </table>
     </div>
   </main>
 
-  <!-- Optional: Delete Confirmation Modal -->
+  <!-- Delete Confirmation Modal -->
   <div
     id="deleteModal"
     class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden"

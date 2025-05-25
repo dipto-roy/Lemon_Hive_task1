@@ -2,27 +2,26 @@
 namespace LH\Controller;
 
 require_once __DIR__ . '/../Model/Blog.php';
+require_once __DIR__ . '/../Model/Settings.php';
 
 use LH\Model\Blog;
+use LH\Model\Settings;
 
 class BlogController {
     private Blog $blogModel;
 
     public function __construct() {
         $this->blogModel = new Blog();
-        if(session_status() === PHP_SESSION_NONE) session_start();
+        if (session_status() === PHP_SESSION_NONE) session_start();
     }
 
-    // Create post ফর্ম দেখানো
     public function showCreateForm(array $errors = [], array $postData = []): void {
         require __DIR__ . '/../view/admin/create_blog.php';
     }
 
-    // Create post সাবমিট হ্যান্ডলার
     public function createPost(array $postData, array $fileData): void {
         $title = trim($postData['title'] ?? '');
         $description = trim($postData['description'] ?? '');
-
         $errors = [];
 
         if ($title === '') {
@@ -31,7 +30,6 @@ class BlogController {
         if ($description === '') {
             $errors[] = "Description is required.";
         }
-
         if (!isset($fileData['image']) || $fileData['image']['error'] !== UPLOAD_ERR_OK) {
             $errors[] = "Image upload failed.";
         } else {
@@ -73,24 +71,35 @@ class BlogController {
         }
     }
 
-    // Pagination সহ পোস্টগুলো ফেরত দিবে
-    public function listPosts(int $page, int $postsPerPage): array {
+    public function listPosts(int $page, ?int $postsPerPage = null): array {
+        if ($postsPerPage === null) {
+            $settingsModel = new Settings();
+            $postsPerPage = $settingsModel->getPostsPerPage();
+        }
         $offset = ($page - 1) * $postsPerPage;
         return $this->blogModel->getPosts($postsPerPage, $offset);
     }
 
-    // মোট পেজ সংখ্যা হিসাব করবে
-    public function getTotalPages(int $postsPerPage): int {
-        $totalPosts = $this->blogModel->getTotalPostsCount();
-        return (int) ceil($totalPosts / $postsPerPage);
+    public function getTotalPages(?int $postsPerPage = null): int {
+        if ($postsPerPage === null) {
+            $settingsModel = new Settings();
+            $postsPerPage = $settingsModel->getPostsPerPage();
+        }
+        $total = $this->blogModel->getTotalPostsCount();
+        return (int) ceil($total / $postsPerPage);
     }
 
-    // একটি পোস্টের বিস্তারিত
     public function getPost(int $id): ?array {
         return $this->blogModel->getPostById($id);
     }
-    public function getAllPosts(): array {
-    return $this->blogModel->getAllPostsNoPagination();
-}
 
+    public function deletePost(int $id): void {
+        if ($this->blogModel->deletePost($id)) {
+            http_response_code(200);
+            echo json_encode(['success' => true]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['success' => false]);
+        }
+    }
 }

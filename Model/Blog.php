@@ -44,4 +44,20 @@ class Blog {
             ':image' => $image
         ]);
     }
+     public function updatePost(int $id, string $title, string $description, ?string $image = null): bool {
+        if ($image) {
+            $sql = "UPDATE blogs SET title = :title, description = :description, image = :image WHERE id = :id";
+            $params = [':title' => $title, ':description' => $description, ':image' => $image, ':id' => $id];
+        } else {
+            $sql = "UPDATE blogs SET title = :title, description = :description WHERE id = :id";
+            $params = [':title' => $title, ':description' => $description, ':id' => $id];
+        }
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($params);
+    }
+    public function deletePost(int $id): bool {
+        $stmt = $this->db->prepare("DELETE FROM blogs WHERE id = :id");
+        return $stmt->execute([':id' => $id]);
+    }
+
 }
