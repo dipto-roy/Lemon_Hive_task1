@@ -11,6 +11,16 @@ $controller = new BlogController();
 $posts = $controller->getAllPosts();
 ?>
 
+<?php
+require_once __DIR__ . '/../../Controller/BlogController.php';
+
+
+
+$controller = new BlogController();
+$posts = $controller->listPosts(1, 100);  // পেজ 1, ১০০ পোস্ট (বা আপনার প্রয়োজন অনুযায়ী)
+?>
+
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth" >
 <head>

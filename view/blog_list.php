@@ -20,8 +20,8 @@ $totalPages = $totalPages ?? 1;
         <a href="index.php" class="text-2xl font-bold tracking-tight mb-2 sm:mb-0"><span class="text-blue-400">DIP</span> Blog</a>
         <nav>
             <ul class="flex gap-4 sm:gap-6">
-                <li><a href="" class="hover:text-blue-300 transition">Home</a></li>
-                <li><a href="login_page.php" class="hover:text-blue-300 transition">Admin</a></li>
+                <li><a href="index.php" class="hover:text-blue-300 transition">Home</a></li>
+                <li><a href="login.php" class="hover:text-blue-300 transition">Admin</a></li>
             </ul>
         </nav>
     </header>

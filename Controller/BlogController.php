@@ -18,9 +18,6 @@ class BlogController {
         require __DIR__ . '/../view/admin/create_blog.php';
     }
 
-    
-
-
     // Create post সাবমিট হ্যান্ডলার
     public function createPost(array $postData, array $fileData): void {
         $title = trim($postData['title'] ?? '');
@@ -76,17 +73,24 @@ class BlogController {
         }
     }
 
-     public function listPosts(int $page, int $postsPerPage): array {
+    // Pagination সহ পোস্টগুলো ফেরত দিবে
+    public function listPosts(int $page, int $postsPerPage): array {
         $offset = ($page - 1) * $postsPerPage;
-        return $this->blogModel->getAllPosts($postsPerPage, $offset);
+        return $this->blogModel->getPosts($postsPerPage, $offset);
     }
 
+    // মোট পেজ সংখ্যা হিসাব করবে
     public function getTotalPages(int $postsPerPage): int {
-        $totalPosts = $this->blogModel->getTotalCount();
+        $totalPosts = $this->blogModel->getTotalPostsCount();
         return (int) ceil($totalPosts / $postsPerPage);
     }
-    // Controller/BlogController.php
-public function getAllPosts(): array {
+
+    // একটি পোস্টের বিস্তারিত
+    public function getPost(int $id): ?array {
+        return $this->blogModel->getPostById($id);
+    }
+    public function getAllPosts(): array {
     return $this->blogModel->getAllPostsNoPagination();
 }
+
 }
